@@ -1,7 +1,20 @@
-start "" /wait "C:\Program Files\Unity\Hub\Editor\6000.3.28f1\Editor\Unity.exe" -batchmode -nographics -quit ^
-  -projectPath "C:\monster\live\Elice_Unity_Sample\UnityProject" ^
+@echo off
+set UNITY=C:\Program Files\Unity\Hub\Editor\6000.3.28f1\Editor\Unity.exe
+
+cd /d "%~dp0"
+if not exist Logs mkdir Logs
+
+"%UNITY%" -batchmode -nographics -quit ^
+  -projectPath "%CD%" ^
   -buildTarget Win64 ^
   -executeMethod ExpeditionCamp.EditorTools.BuildScript.BuildForTest ^
   -logFile Logs\build_windows.log
 
-echo %ERRORLEVEL%
+if %ERRORLEVEL% neq 0 (
+  echo BUILD FAILED. Last lines of Logs\build_windows.log:
+  powershell -NoProfile -Command "Get-Content Logs\build_windows.log -Tail 30"
+  exit /b 1
+)
+
+echo BUILD SUCCEEDED: Builds\Game.exe
+exit /b 0
