@@ -19,6 +19,7 @@ pipeline {
                 sh 'rm -rf Builds'
                 sh 'chmod +x UnityProject/build_mac.sh'
                 sh './UnityProject/build_mac.sh'
+                sh 'ditto -c -k --keepParent Builds/Test/ExpeditionCamp.app Builds/Game.zip'
             }
         }
     }
