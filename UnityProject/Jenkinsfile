@@ -16,18 +16,20 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'if exist Builds rmdir /s /q Builds'
-                bat 'call UnityProject\\build_windows.bat'
+                sh 'rm -rf Builds'
+                sh 'chmod +x UnityProject/build_mac.sh'
+                sh './UnityProject/build_mac.sh'
+                sh 'ditto -c -k --keepParent Builds/Test/ExpeditionCamp.app Builds/Game.zip'
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'UnityProject/Logs/build_windows.log', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'UnityProject/Logs/build_mac.log', allowEmptyArchive: true
         }
         success {
-            archiveArtifacts artifacts: 'Builds/**', fingerprint: true
+            archiveArtifacts artifacts: 'Builds/Game.zip', fingerprint: true
         }
     }
 }
