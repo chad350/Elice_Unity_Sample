@@ -30,22 +30,6 @@ pipeline {
         }
         success {
             archiveArtifacts artifacts: 'Builds/Game.zip', fingerprint: true
-            withCredentials([string(credentialsId: 'discoed-webhook', variable: 'DISCORD_WEBHOOK')]) {
-                discordSend(
-                    webhookURL: env.DISCORD_WEBHOOK,
-                    title: "빌드 성공",
-                    link: env.BUILD_URL
-                )
-            }
-        }
-        failure {
-            withCredentials([string(credentialsId: 'discoed-webhook', variable: 'DISCORD_WEBHOOK')]) {
-                discordSend(
-                    webhookURL: env.DISCORD_WEBHOOK,
-                    title: "빌드 실패",
-                    link: env.BUILD_URL
-                )
-            }
         }
     }
 }
