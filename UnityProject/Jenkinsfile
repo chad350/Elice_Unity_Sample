@@ -34,7 +34,7 @@ pipeline {
                 discordSend(
                     webhookURL: env.DISCORD_WEBHOOK,
                     title: "빌드 성공",
-                    result: currentBuild.currentResult
+                    link: env.BUILD_URL
                 )
             }
         }
@@ -43,7 +43,7 @@ pipeline {
                 discordSend(
                     webhookURL: env.DISCORD_WEBHOOK,
                     title: "빌드 실패",
-                    result: currentBuild.currentResult
+                    link: env.BUILD_URL
                 )
             }
         }
