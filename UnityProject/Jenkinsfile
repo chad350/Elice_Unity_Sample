@@ -17,15 +17,15 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'rm -rf Builds'
-                sh 'chmod +x build_mac.sh'
-                sh './build_mac.sh'
+                sh 'chmod +x UnityProject/build_mac.sh'
+                sh './UnityProject/build_mac.sh'
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'Logs/build_mac.log', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'UnityProject/Logs/build_mac.log', allowEmptyArchive: true
         }
         success {
             archiveArtifacts artifacts: 'Builds/Game.zip', fingerprint: true
